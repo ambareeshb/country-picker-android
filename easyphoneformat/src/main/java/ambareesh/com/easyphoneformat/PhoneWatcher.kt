@@ -5,9 +5,9 @@ import android.telephony.PhoneNumberUtils
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
-
 import io.michaelrocks.libphonenumber.android.AsYouTypeFormatter
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+
 
 /**
  * Created by ambareesh on 23/10/17.

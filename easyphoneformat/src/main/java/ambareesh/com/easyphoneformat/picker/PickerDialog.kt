@@ -20,19 +20,12 @@ import kotlinx.android.synthetic.main.country_picker.*
 class PickerDialog : DialogFragment(), EasyPhoneText.CountryPicker {
     val TAG = "PICKER_DIALOG"
 
-
-    override fun initPicker(phoneText: EasyPhoneText) {
-        phoneText.pickerListener = this@PickerDialog
-    }
-
-
     override fun showPicker(list: Array<Country>) {
-        newInstance().show(fragmentManager, TAG)
+        show(activity.fragmentManager, TAG)
     }
 
     companion object {
-        fun newInstance(): PickerDialog = PickerDialog.newInstance()
-
+        fun newInstance(): PickerDialog = PickerDialog()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -1,8 +1,8 @@
 package ambareesh.com.easyphoneformat
 
+import ambareesh.com.easyphoneformat.picker.PickerDialog
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.easy_phone_text.view.*
 
@@ -57,10 +57,10 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
     }
 
     private fun init() {
-        View.inflate(context, R.layout.easy_phone_text, null)
+        inflate(context, R.layout.easy_phone_text, this)
         val flagParams = imageFlag.layoutParams as LinearLayout.LayoutParams
         flagParams.weight = flagWeight.toFloat()
-        val phoneParams = textPhoneNumber.layoutParams as LinearLayout.LayoutParams
+        val phoneParams = textPhoneNumber?.layoutParams as LinearLayout.LayoutParams
         phoneParams.weight = numberWeight.toFloat()
 
         //Visibility change accordingly.
@@ -68,16 +68,16 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
         if (noEditText) textPhoneNumber.visibility = GONE
 
         selectedCountry = Country.getCountryByISO("IN")
-        imageFlag.setOnClickListener { pickerListener?.showPicker(Country.COUNTRIES) }
-    }
 
+
+        imageFlag.setOnClickListener { PickerDialog().showPicker(Country.COUNTRIES) }
+    }
 
 
     /**
      * open a picker to choose country
      */
     interface CountryPicker {
-        fun initPicker( phoneText: EasyPhoneText)
         fun showPicker(list: Array<Country>)
     }
 
