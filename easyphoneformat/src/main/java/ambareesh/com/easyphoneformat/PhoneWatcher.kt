@@ -59,28 +59,18 @@ class PhoneWatcher
     }
 
     @Synchronized override fun afterTextChanged(numberEditable: Editable) {
-        val plus = "+"
         val reg = Regex("\\+.[^+]*")
         val numberString = numberEditable.toString()
 
-        if (numberString.length < countryCode.length + 1 && numberEditable.isNotEmpty()) {
-            val display = plus + countryCode
+        if (numberString.length < countryCode.length && numberEditable.trim().isNotEmpty()) {
             numberEditable.clear()
-            numberEditable.append(display)
+            numberEditable.append(countryCode)
             return
         }
-        else if(!reg.matches(numberString)){//Remove any "+" signs other than starting one.
+        else if(numberEditable.trim().isNotEmpty() && !reg.matches(numberString)){//Remove any "+" signs other than starting one.
             numberEditable.append(numberString.replace("+",""),1,
                     numberEditable.length)
         }
-
-// else if (numberEditable.isNotEmpty() && numberString.subSequence(1, numberEditable.toString().length).contains(plus)) {
-//            val sub = numberString.substring(1, numberEditable.toString().length)
-//            val withoutPlus = sub.replace(plus, "")
-//            val display = plus + withoutPlus
-//            numberEditable.clear()
-//            numberEditable.append(display)
-//        }//Remove any "+" signs other than starting one.
 
         if (mStopFormatting) {
             // Restart the formatting when all texts were clear.

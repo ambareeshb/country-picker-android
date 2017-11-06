@@ -12,8 +12,13 @@ import kotlinx.android.synthetic.main.country_layout.view.*
  * Created by ambareesh on 31/10/17.
  * Adapter class for country.
  */
-class CountryAdapter : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
-     var countries: List<Country>? = null
+class CountryAdapter(var listener: Country.CountryListener) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+    var countries: List<Country>? = null
+        set(value)  {
+            field = value
+            notifyDataSetChanged()
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val layoutView = LayoutInflater
@@ -29,11 +34,13 @@ class CountryAdapter : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
         return countries?.size ?: 0
     }
 
-    class ViewHolder(val item: View) : RecyclerView.ViewHolder(item) {
+    inner class ViewHolder(val item: View) : RecyclerView.ViewHolder(item) {
         fun bind(country: Country) {
             item.flagImage.setImageResource(country.flag)
-            item.countryName.setText(country.name)
+            item.countryName.text = country.name
+            item.setOnClickListener { listener.countrySelected(country) }
         }
 
     }
+
 }

@@ -2,11 +2,7 @@ package ambareesh.com.easyphoneformat
 
 import android.content.Context
 import android.telephony.TelephonyManager
-import android.text.TextUtils
-
-import java.util.Arrays
-import java.util.Comparator
-import java.util.Locale
+import java.util.*
 
 class Country(code: String = "",  var name: String = "",
                var dialCode: String = "",  var flag: Int = -1) {

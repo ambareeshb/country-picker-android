@@ -9,7 +9,6 @@ import android.util.AttributeSet
  */
 
 class PhoneText : android.support.v7.widget.AppCompatEditText {
-    private val PLUS = "+"
 
     private var countryPrefix: String? = null
     private var countryCode: String? = null
@@ -37,8 +36,7 @@ class PhoneText : android.support.v7.widget.AppCompatEditText {
         this.countryCode = countryCode
 //        removeTextChangedListener(phoneFormatter)
 
-        val displayText = PLUS + countryPrefix
-        setText(displayText)
+        setText(countryPrefix)
         setSelection(text.length)
 
 

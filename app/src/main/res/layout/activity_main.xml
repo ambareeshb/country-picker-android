@@ -3,10 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="ambareesh.com.easyphonepicker.MainActivity">
 
     <ambareesh.com.easyphoneformat.EasyPhoneText
+        android:id="@+id/easyPhoneText"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content"
+        app:no_edit_text="false"
+        app:selected_country="IN"
+       />
 
 </LinearLayout>

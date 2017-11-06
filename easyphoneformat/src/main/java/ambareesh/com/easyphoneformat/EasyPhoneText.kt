@@ -2,6 +2,8 @@ package ambareesh.com.easyphoneformat
 
 import ambareesh.com.easyphoneformat.picker.PickerDialog
 import android.content.Context
+import android.support.v4.app.FragmentManager
+import android.support.v7.app.AppCompatActivity
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.easy_phone_text.view.*
@@ -11,21 +13,25 @@ import kotlinx.android.synthetic.main.easy_phone_text.view.*
  */
 
 class EasyPhoneText : LinearLayout, Country.CountryListener {
+
     override fun countrySelected(country: Country) {
         selectedCountry = country
-        textPhoneNumber.setCountryCode(countryCode = country.code, countryPrefix = country.dialCode)
+
     }
 
+    private var fragmentManger: FragmentManager? = null
     private var flagWeight = 2
-    private var numberWeight = 8
+    private var numberWeight = 10
     private var noEditText = false
     private var isCountryVisible = true
 
-    var selectedCountry: Country? = null
-        get() = Country.getCountryByISO("IN")
+    private var selectedCountry: Country? = null
         set(value) {
             field = value
-            field?.flag?.let { imageFlag.setImageResource(it) }
+            field?.let {
+                imageFlag.setImageResource(it.flag)
+                textPhoneNumber.setCountryCode(countryCode = it.code, countryPrefix = it.dialCode)
+            }
         }
 
     // Listener for country picker opening.
@@ -47,30 +53,44 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
     private fun init(context: Context, attrs: AttributeSet?) {
         init()
         val attrArray = context.theme.obtainStyledAttributes(attrs, R.styleable.EasyPhoneText, 0, 0)
-        flagWeight = attrArray.getInteger(R.styleable.EasyPhoneText_flag_width_ratio, 2)
-        numberWeight = attrArray.getInt(R.styleable.EasyPhoneText_number_width_ratio, 8)
+        flagWeight = attrArray.getInteger(R.styleable.EasyPhoneText_flag_width_ratio, 1)
+        numberWeight = attrArray.getInt(R.styleable.EasyPhoneText_number_width_ratio, 30)
         isCountryVisible = attrArray.getBoolean(R.styleable.EasyPhoneText_country_visible, true)
         noEditText = attrArray.getBoolean(R.styleable.EasyPhoneText_no_edit_text, false)
+        selectedCountry = if (attrArray.hasValue(R.styleable.EasyPhoneText_selected_country)) {
+            Country.getCountryByISO(attrArray
+                    .getString(R.styleable.EasyPhoneText_selected_country))
+        } else {
+            Country.getCountryByISO("IN")
+        }
 
+        //Visibility and weight  change accordingly.
+        if (!isCountryVisible) {
+            imageFlag.visibility = GONE; numberWeight = 10
+        }
+        if (noEditText) {
+            textPhoneNumber.visibility = GONE;flagWeight = 10
+        }
+        val flagParams = imageFlag.layoutParams as LinearLayout.LayoutParams
+        flagParams.weight = flagWeight.toFloat()
+        val phoneParams = textPhoneNumber?.layoutParams as LinearLayout.LayoutParams
+        phoneParams.weight = numberWeight.toFloat()
+
+        when (context) {
+            is AppCompatActivity -> fragmentManger = context.supportFragmentManager
+            is android.support.v4.app.Fragment -> fragmentManger = context.fragmentManager
+        }
         //View initialise
         attrArray.recycle()
     }
 
     private fun init() {
         inflate(context, R.layout.easy_phone_text, this)
-        val flagParams = imageFlag.layoutParams as LinearLayout.LayoutParams
-        flagParams.weight = flagWeight.toFloat()
-        val phoneParams = textPhoneNumber?.layoutParams as LinearLayout.LayoutParams
-        phoneParams.weight = numberWeight.toFloat()
 
-        //Visibility change accordingly.
-        if (!isCountryVisible) imageFlag.visibility = GONE
-        if (noEditText) textPhoneNumber.visibility = GONE
-
-        selectedCountry = Country.getCountryByISO("IN")
-
-
-        imageFlag.setOnClickListener { PickerDialog().showPicker(Country.COUNTRIES) }
+        imageFlag.setOnClickListener {
+            pickerListener?.
+                    showPicker(fragmentManger!!, Country.COUNTRIES, this@EasyPhoneText)
+        }
     }
 
 
@@ -78,7 +98,7 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
      * open a picker to choose country
      */
     interface CountryPicker {
-        fun showPicker(list: Array<Country>)
+        fun showPicker(manager: FragmentManager, list: Array<Country>, listener: Country.CountryListener)
     }
 
 
