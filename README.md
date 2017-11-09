@@ -26,16 +26,13 @@ allprojects {
 }
 ```
 In `app/build.gradle` append at bottom,
- 
  ```
- ...
  ...
  
  compile 'com.ambareeshb:easy-phone-picker:0.9.0'
  
  ```
 In your `Activity` or `Fragment` layout file,
-
 ```
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -59,7 +56,43 @@ In your `Activity` or `Fragment` layout file,
 Done :+1:
 
 ## Usage
- ### XML tags
+ #### XML tags
     - app:selected_country="IN" (value is a string ISO two letter country name).
     - app:no_edit_text="false"  (true if u want a country picker alone).
     - app:country_visible="false" if true no country chooser, by default (Indian phone number formater).
+ 
+ #### Showing a custom country picker   
+ 
+ Implement a EasyPhoneText.CountryPicker interface on your custom picker class.
+ 
+  ```
+  class PickerDialog : android.support.v4.app.DialogFragment(), EasyPhoneText.CountryPicker, Country.CountryListener {
+    private val TAG = "PICKER_DIALOG"
+    private var countryListener: Country.CountryListener? = null
+
+
+    override fun countrySelected(country: Country) {
+        dismiss()
+        countryListener?.countrySelected(country)
+    }
+
+
+    override fun showPicker(manager: FragmentManager, list: Array<Country>,listener:Country.CountryListener) {
+        show(manager, TAG)
+        countryListener = listener
+    }
+   
+    companion object {
+        fun newInstance(): PickerDialog = PickerDialog()
+    }
+    
+   ```
+Then in your `Activity` or `Fragment` class
+
+```
+ easyPhoneText.pickerListener = PickerDialog.newInstance()
+ 
+```
+Where `easyPhoneText` is a View of Type `EasyPhoneText`. After this whenever the flag icon is tapped 
+
+`easyPhoneText.pickerListener?.showPicker()` will be invoked.
