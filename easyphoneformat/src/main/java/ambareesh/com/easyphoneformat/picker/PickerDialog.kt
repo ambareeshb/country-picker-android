@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.country_picker.*
 
 /**
  * Created by ambareesh on 31/10/17.
+ * Demo Custom picker.
  */
 class PickerDialog : android.support.v4.app.DialogFragment(), EasyPhoneText.CountryPicker, Country.CountryListener {
     private val TAG = "PICKER_DIALOG"

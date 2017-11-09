@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.easy_phone_text.view.*
 
 /**
  * Created by ambareesh on 26/10/17.
+ * Layout for country selection and number input.
  */
 
 class EasyPhoneText : LinearLayout, Country.CountryListener {
@@ -20,8 +21,6 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
     }
 
     private var fragmentManger: FragmentManager? = null
-    private var flagWeight = 2
-    private var numberWeight = 10
     private var noEditText = false
     private var isCountryVisible = true
 
@@ -50,46 +49,41 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
         init(context, attrs)
     }
 
+    /**
+     * Initialise custom XML Tags.
+     */
     private fun init(context: Context, attrs: AttributeSet?) {
         init()
         val attrArray = context.theme.obtainStyledAttributes(attrs, R.styleable.EasyPhoneText, 0, 0)
-        flagWeight = attrArray.getInteger(R.styleable.EasyPhoneText_flag_width_ratio, 1)
-        numberWeight = attrArray.getInt(R.styleable.EasyPhoneText_number_width_ratio, 30)
         isCountryVisible = attrArray.getBoolean(R.styleable.EasyPhoneText_country_visible, true)
         noEditText = attrArray.getBoolean(R.styleable.EasyPhoneText_no_edit_text, false)
-        selectedCountry = if (attrArray.hasValue(R.styleable.EasyPhoneText_selected_country)) {
-            Country.getCountryByISO(attrArray
-                    .getString(R.styleable.EasyPhoneText_selected_country))
-        } else {
-            Country.getCountryByISO("IN")
+
+        selectedCountry = if (attrArray.hasValue(R.styleable.EasyPhoneText_selected_country))
+        {
+            Country.getCountryByISO(attrArray.getString(R.styleable.EasyPhoneText_selected_country))
+        }
+        else {
+            Country.getCountryByISO("IN")//Default
         }
 
-        //Visibility and weight  change accordingly.
-        if (!isCountryVisible) {
-            imageFlag.visibility = GONE; numberWeight = 10
-        }
-        if (noEditText) {
-            textPhoneNumber.visibility = GONE;flagWeight = 10
-        }
-        val flagParams = imageFlag.layoutParams as LinearLayout.LayoutParams
-        flagParams.weight = flagWeight.toFloat()
-        val phoneParams = textPhoneNumber?.layoutParams as LinearLayout.LayoutParams
-        phoneParams.weight = numberWeight.toFloat()
-
+        // Initialise fragment manager from context.
         when (context) {
             is AppCompatActivity -> fragmentManger = context.supportFragmentManager
             is android.support.v4.app.Fragment -> fragmentManger = context.fragmentManager
         }
+
         //View initialise
         attrArray.recycle()
     }
 
+    /**
+     * Basic init.
+     */
     private fun init() {
         inflate(context, R.layout.easy_phone_text, this)
-
         imageFlag.setOnClickListener {
-            pickerListener?.
-                    showPicker(fragmentManger!!, Country.COUNTRIES, this@EasyPhoneText)
+            pickerListener?.showPicker(fragmentManger!!,
+                    Country.COUNTRIES, this@EasyPhoneText)
         }
     }
 

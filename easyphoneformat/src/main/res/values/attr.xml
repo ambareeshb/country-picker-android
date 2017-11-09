@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="EasyPhoneText">
-        <attr name="flag_width_ratio" format="integer"/>
-        <attr name="number_width_ratio" format="integer"/>
         <attr name="country_visible" format="boolean"/>
         <attr name="no_edit_text" format="boolean"/>
         <attr name="selected_country" format="string"/>
+        <attr name="reg_ex" format="string"/>
+        <attr name="no_country_prefix" format="boolean"/>
     </declare-styleable>
 </resources>

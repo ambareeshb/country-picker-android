@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:no_edit_text="false"
+        app:country_visible="true"
         app:selected_country="IN"
        />
 
