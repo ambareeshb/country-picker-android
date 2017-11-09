@@ -1,12 +1,14 @@
 # EasyPhonePicker
 [![](https://img.shields.io/badge/API-9%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=9)
 
-A simple library that displays a beautiful list of all the countries allowing the user to pick the country he wishes and provide details like country code, iso code name and flag. 
+A simple Kotlin based Android library that displays  list of all the countries allowing the user to pick the country he wishes and provide details like country code, iso code name and flag. 
 
 ## But why?
 
 - There are no stable working libraries for formatting phone number in Android.
+
 - Uses [MichaelRocks/libphonenumber-android](https://github.com/MichaelRocks/libphonenumber-android), a fork of becoming de facto number formating standard [googlei18n/libphonenumber](https://github.com/googlei18n/libphonenumber) 
+
 - Leeway for custom picker for selecting countries (Spinner,RecycleView Or No view :;):).
 
 ## Gradle
