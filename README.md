@@ -13,17 +13,6 @@ A simple Kotlin based Android library that displays  list of all the countries a
 
 ## Gradle
 
-In project level gradle append,
-```
-allprojects {
-    repositories {
-        ...
-        ...
-        maven{
-            url 'https://dl.bintray.com/ambareeshb/EasyPhonePicker'
-        }
-    }
-}
 ```
 In `app/build.gradle` append at bottom,
  ```
