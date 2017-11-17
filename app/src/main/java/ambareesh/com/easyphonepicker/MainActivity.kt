@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         easyPhoneText.pickerListener = PickerDialog.newInstance()
+//        easyPhoneText.editText = editText
 
     }
 }

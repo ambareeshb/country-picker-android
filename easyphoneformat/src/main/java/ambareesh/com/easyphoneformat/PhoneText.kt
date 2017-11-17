@@ -34,13 +34,11 @@ class PhoneText : android.support.v7.widget.AppCompatEditText {
     fun setCountryCode(countryCode: String, countryPrefix: String) {
         this.countryPrefix = countryPrefix
         this.countryCode = countryCode
-//        removeTextChangedListener(phoneFormatter)
-
+        removeTextChangedListener(phoneFormatter)
         setText(countryPrefix)
         setSelection(text.length)
 
-
-        phoneFormatter = PhoneWatcher(context,countryCode, countryPrefix)
+        phoneFormatter = PhoneWatcher(context, countryCode, countryPrefix)
         addTextChangedListener(phoneFormatter)
     }
 

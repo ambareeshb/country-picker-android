@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="ambareesh.com.easyphonepicker.MainActivity">
 
@@ -13,7 +14,12 @@
         android:layout_height="wrap_content"
         app:no_edit_text="false"
         app:country_visible="true"
-        app:selected_country="IN"
+        app:selected_country="US"
        />
+    <!--<ambareesh.com.easyphoneformat.PhoneText-->
+        <!--android:id="@+id/editText"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="20dp"/>-->
 
 </LinearLayout>
