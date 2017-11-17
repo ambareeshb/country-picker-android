@@ -2,8 +2,11 @@ package ambareesh.com.easyphoneformat
 
 import ambareesh.com.easyphoneformat.picker.PickerDialog
 import android.content.Context
+import android.content.res.TypedArray
+import android.support.annotation.StyleableRes
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.easy_phone_text.view.*
@@ -17,19 +20,29 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
 
     override fun countrySelected(country: Country) {
         selectedCountry = country
-
     }
 
     private var fragmentManger: FragmentManager? = null
     private var noEditText = false
     private var isCountryVisible = true
+    private var editText: PhoneText? = null
+        set(value) {
+            value?.let {
+                textPhoneNumber.visibility = GONE
+                value.inputType = InputType.TYPE_CLASS_PHONE
+                selectedCountry?.let { value.setCountryCode(it.code, it.dialCode) }
+                field = value
+            }
+        }
+    get() = field ?: textPhoneNumber
+
 
     private var selectedCountry: Country? = null
         set(value) {
             field = value
             field?.let {
                 imageFlag.setImageResource(it.flag)
-                textPhoneNumber.setCountryCode(countryCode = it.code, countryPrefix = it.dialCode)
+                editText?.setCountryCode(countryCode = it.code, countryPrefix = it.dialCode)
             }
         }
 
@@ -55,16 +68,7 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
     private fun init(context: Context, attrs: AttributeSet?) {
         init()
         val attrArray = context.theme.obtainStyledAttributes(attrs, R.styleable.EasyPhoneText, 0, 0)
-        isCountryVisible = attrArray.getBoolean(R.styleable.EasyPhoneText_country_visible, true)
-        noEditText = attrArray.getBoolean(R.styleable.EasyPhoneText_no_edit_text, false)
-
-        selectedCountry = if (attrArray.hasValue(R.styleable.EasyPhoneText_selected_country))
-        {
-            Country.getCountryByISO(attrArray.getString(R.styleable.EasyPhoneText_selected_country))
-        }
-        else {
-            Country.getCountryByISO("IN")//Default
-        }
+        initAttributes(attrArray)
 
         // Initialise fragment manager from context.
         when (context) {
@@ -85,6 +89,21 @@ class EasyPhoneText : LinearLayout, Country.CountryListener {
             pickerListener?.showPicker(fragmentManger!!,
                     Country.COUNTRIES, this@EasyPhoneText)
         }
+    }
+
+    /**
+     * The XML  tag values are initialised.
+     */
+    private fun initAttributes(attrArray: TypedArray) {
+        isCountryVisible = attrArray.getBoolean(R.styleable.EasyPhoneText_country_visible, true)
+        noEditText = attrArray.getBoolean(R.styleable.EasyPhoneText_no_edit_text, false)
+
+        selectedCountry = if (attrArray.hasValue(R.styleable.EasyPhoneText_selected_country)) {
+            Country.getCountryByISO(attrArray.getString(R.styleable.EasyPhoneText_selected_country))
+        } else {
+            Country.getCountryByISO("IN")//Default
+        }
+
     }
 
 
