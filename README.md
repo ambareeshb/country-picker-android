@@ -13,7 +13,7 @@ A simple Kotlin based Android library that displays  list of all the countries a
 
 ## Gradle
 
-```
+
 In `app/build.gradle` append at bottom,
  ```
  ...
@@ -82,6 +82,6 @@ Then in your `Activity` or `Fragment` class
  easyPhoneText.pickerListener = PickerDialog.newInstance()
  
 ```
-Where `easyPhoneText` is a View of Type `EasyPhoneText`. After this whenever the flag icon is tapped 
+Where `easyPhoneText` is a View of Type `EasyPhoneText`(. After this whenever the flag icon is tapped 
 
 `easyPhoneText.pickerListener?.showPicker()` will be invoked.
