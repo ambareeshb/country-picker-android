@@ -3,6 +3,8 @@
 
 A simple Kotlin based Android library that displays  list of all the countries allowing the user to pick the country he wishes and provide details like country code, iso code name and flag. 
 
+![Alt text](/easy_picker.gif?raw=true)
+
 ## But why?
 
 - There are no stable working libraries for formatting phone number in Android.
