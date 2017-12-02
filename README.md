@@ -51,7 +51,7 @@ Done :+1:
     - app:selected_country="IN" (value is a string ISO two letter country name).
     - app:no_edit_text="false"  (true if u want a country picker alone).
     - app:country_visible="false" if true no country chooser, by default (Indian phone number formater).
- 
+
  #### Showing a custom country picker   
  
  Implement a EasyPhoneText.CountryPicker interface on your custom picker class.
@@ -81,9 +81,11 @@ Done :+1:
 Then in your `Activity` or `Fragment` class
 
 ```
- easyPhoneText.pickerListener = PickerDialog.newInstance()
+ easyPhoneText.pickerListener = PickerDialog.newInstance() 
+  
+  `by default there is a PickerDialog witha spinner of al available countries so you can use the above statement without any custom implementations of the picker`
  
 ```
-Where `easyPhoneText` is a View of Type `EasyPhoneText`(. After this whenever the flag icon is tapped 
+Where `easyPhoneText` is a View of Type `EasyPhoneText`. After this whenever the flag icon is tapped 
 
 `easyPhoneText.pickerListener?.showPicker()` will be invoked.
