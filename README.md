@@ -83,7 +83,7 @@ Then in your `Activity` or `Fragment` class
 ```
  easyPhoneText.pickerListener = PickerDialog.newInstance() 
   
-  `by default there is a PickerDialog witha spinner of al available countries so you can use the above statement without any custom implementations of the picker`
+  `By default there is a PickerDialog with a spinner of all available countries so you can use the above statement without any custom implementations of the picker`
  
 ```
 Where `easyPhoneText` is a View of Type `EasyPhoneText`. After this whenever the flag icon is tapped 
